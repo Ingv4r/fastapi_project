@@ -1,7 +1,7 @@
 """Database creation
 
 Revision ID: 546bd4ef1bad
-Revises: 
+Revises:
 Create Date: 2023-11-07 00:58:02.332968
 
 """

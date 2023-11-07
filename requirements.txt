@@ -3,3 +3,5 @@ sqlalchemy~=2.0.23
 alembic~=1.12.1
 psycopg2
 black
+fastapi-users[sqlalchemy]
+asyncpg
