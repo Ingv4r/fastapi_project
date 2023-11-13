@@ -1,12 +1,12 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_async_session
 from auth.models import User, user
-from auth.schemas import UserRead
+from .schemas import UserRead
 
 from auth.base_config import current_user
 
@@ -27,5 +27,12 @@ def protected_route(user: User = Depends(current_user)):
 @router.get('/users', response_model=List[UserRead])
 async def get_users_list(session: AsyncSession = Depends(get_async_session)):
     query = select(user)
+    result = await session.execute(query)
+    return result.all()
+
+
+@router.get('/users/{user_id}', response_model=List[UserRead])
+async def get_user(user_id: int, session: AsyncSession = Depends(get_async_session)):
+    query = select(user).filter(user.c.id == user_id)
     result = await session.execute(query)
     return result.all()
